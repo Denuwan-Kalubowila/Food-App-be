@@ -5,7 +5,7 @@ pipeline {
         stage('SCM Checkout') {
             steps {
                 retry(3) {
-                    git branch: 'main' url:'https://github.com/Denuwan-Kalubowila/Food-App-be'
+                    git branch: 'main', url: 'https://github.com/Denuwan-Kalubowila/Food-App-be'
                 }
             }
         }
@@ -16,8 +16,8 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'test-dockerhubpassword', variable: 'test-dockerhubpassword')]) {
-                    bat 'docker login -u vishwadk -p ${test-dockerhubpassword}'
+                withCredentials([string(credentialsId: 'food-dockerpass', variable: 'food-dockerpass')]) {
+                    bat 'docker login -u vishwadk -p ${food-dockerpass}'
                 }
             }
         }
@@ -32,5 +32,5 @@ pipeline {
         always {
             bat 'docker logout'
         }
-    }
+    }   
 }
