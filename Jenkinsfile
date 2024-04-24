@@ -16,8 +16,10 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'food-dockerpass', variable: 'food-dockerpass')]) {
-                    bat 'docker login -u vishwadk -p ${food-dockerpass}'
+                withCredentials([string(credentialsId: 'test-docker', variable: 'test-docker')]) {
+                    scripts {
+                        bat 'docker login -u vishwadk -p ${test-docker}'
+                    }
                 }
             }
         }
