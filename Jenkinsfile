@@ -16,23 +16,12 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'test-docker', variable: 'test-docker')]) {
-                    scripts {
-                        bat 'docker login -u vishwadk -p ${test-docker}'
+                withCredentials([string(credentialsId: 'test-pass', variable: 'testpass')]) {
+                    script {
+                        bat "docker login -u vishwadk -p %testpass%"
                     }
                 }
             }
         }
-        stage('Push Image') {
-            steps {
-                bat 'docker push vishwadk/food-app:%BUILD_NUMBER% .' 
-            }
-        }
-
     }
-    post {
-        always {
-            bat 'docker logout'
-        }
-    }   
 }
